@@ -30,7 +30,7 @@
     statZombies.textContent = z;
     statPct.textContent = total > 0 ? (z / total * 100).toFixed(1) + '%' : '0%';
     var odds;
-    if (guess == null) odds = '\u2014';
+    if (guess == null) odds = '\u2011';
     else if (!guessAlive) odds = '0%';
     else odds = (1 / Math.max(1, h) * 100).toFixed(2) + '%';
     statOdds.textContent = odds;
