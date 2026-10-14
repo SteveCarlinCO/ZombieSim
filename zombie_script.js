@@ -30,7 +30,7 @@
     statZombies.textContent = z;
     statPct.textContent = total > 0 ? (z / total * 100).toFixed(1) + '%' : '0%';
     var odds;
-    if (guess == null) odds = '\u2011';
+    if (guess == null) odds = '\u2014';
     else if (!guessAlive) odds = '0%';
     else odds = (1 / Math.max(1, h) * 100).toFixed(2) + '%';
     statOdds.textContent = odds;
@@ -984,6 +984,7 @@
     var r = cv.getBoundingClientRect();
     var dpr = window.devicePixelRatio || 1;
     W = Math.max(60, r.width);
+    H = Math.max(60, r.height);
     cv.width = Math.round(W * dpr);
     cv.height = Math.round(H * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);

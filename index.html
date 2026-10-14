@@ -11,29 +11,30 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta property="og:title" content="ZOMBIE OUTBREAK SIMULATION">
 <meta property="og:description" content="1,000 humans. One patient zero. Pick a number and bet on the last human standing.">
-<meta property="og:image" content="https://stevecarlinco.github.io/ZombieSim/og-image.png?v=1">
+<meta property="og:image" content="stevecarlinco.github.io/ZombieSim/og-image.png?v2">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ZOMBIE OUTBREAK SIMULATION">
 <meta name="twitter:description" content="1,000 humans. One patient zero. Pick a number and bet on the last human standing.">
-<meta name="twitter:image" content="https://stevecarlinco.github.io/ZombieSim/og-image.png?v=1">
+<meta name="twitter:image" content="stevecarlinco.github.io/ZombieSim/og-image.png?v2">
 <link rel="stylesheet" href="zombie_styles.css">
 </head>
 <body>
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;position:relative;">
-    <div id="simTitle" style="font-family:'Special Elite',monospace;font-size:16px;color:#c02020;letter-spacing:.1em;">ZOMBIE OUTBREAK SIMULATION</div>
-    <button id="muteBtn" title="Mute sound" style="position:absolute;left:50%;transform:translateX(-50%);background:var(--hatch-widget-surface);color:var(--hatch-widget-text);border:1px solid var(--hatch-widget-border);border-radius:8px;padding:6px 12px;font-size:14px;cursor:pointer;">&#128266;</button>
-    <div style="position:absolute;left:72%;transform:translateX(-50%);display:flex;gap:4px;align-items:center;">
-      <span style="font-size:12px;color:var(--hatch-widget-text);white-space:nowrap;">Sim speed</span>
-      <button class="spdBtn" data-spd="1" style="background:#1d7a3a;color:#fff;border:none;border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;">1x</button>
-      <button class="spdBtn" data-spd="2" style="background:var(--hatch-widget-surface);color:var(--hatch-widget-text);border:1px solid var(--hatch-widget-border);border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;">2x</button>
-      <button class="spdBtn" data-spd="4" style="background:var(--hatch-widget-surface);color:var(--hatch-widget-text);border:1px solid var(--hatch-widget-border);border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;">4x</button>
-    </div>
-
-    <div style="display:flex;gap:8px;align-items:center;">
-      <label for="dotsInput" style="font-size:12px;color:var(--hatch-widget-text);white-space:nowrap;">Humans:</label>
-      <input id="dotsInput" type="number" min="2" max="1000" value="1000" style="width:76px;background:var(--hatch-widget-surface);color:var(--hatch-widget-text);border:1px solid var(--hatch-widget-border);border-radius:8px;padding:6px 8px;font-size:12px;">
-      <button id="reset10" style="background:var(--hatch-widget-surface);color:var(--hatch-widget-text);border:1px solid var(--hatch-widget-border);border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;">Reset</button>
+  <div class="header">
+    <div id="simTitle">ZOMBIE OUTBREAK SIMULATION</div>
+    <div class="controls">
+      <button id="muteBtn" title="Mute sound">&#128266;</button>
+      <div class="speed-group">
+        <span class="speed-label">Sim speed</span>
+        <button class="spdBtn" data-spd="1" style="background:#1d7a3a;color:#fff;border:none;">1x</button>
+        <button class="spdBtn" data-spd="2">2x</button>
+        <button class="spdBtn" data-spd="4">4x</button>
+      </div>
+      <div class="humans-group">
+        <label for="dotsInput">Humans:</label>
+        <input id="dotsInput" type="number" min="2" max="1000" value="1000">
+        <button id="reset10">Reset</button>
+      </div>
     </div>
   </div>
 
@@ -67,7 +68,7 @@
   <div id="odds10" style="font-size:11px;color:var(--hatch-widget-muted);margin-top:4px;min-height:16px;"></div>
 
   <div style="margin-top:12px;border:1px solid var(--hatch-widget-border);border-radius:8px;overflow:hidden;">
-    <table style="width:100%;border-collapse:collapse;font-size:13px;color:var(--hatch-widget-text);font-family:'Special Elite',monospace;">
+    <table class="stats-table" style="width:100%;border-collapse:collapse;font-size:13px;color:var(--hatch-widget-text);font-family:'Special Elite',monospace;">
       <tr style="background:var(--hatch-widget-surface);">
         <th style="padding:8px 12px;text-align:left;font-weight:700;">Humans alive</th>
         <th style="padding:8px 12px;text-align:left;font-weight:700;">Zombies</th>
@@ -78,7 +79,7 @@
         <td id="statHumans" style="padding:8px 12px;">1000</td>
         <td id="statZombies" style="padding:8px 12px;">0</td>
         <td id="statPct" style="padding:8px 12px;">0%</td>
-        <td id="statOdds" style="padding:8px 12px;">-</td>
+        <td id="statOdds" style="padding:8px 12px;">&mdash;</td>
       </tr>
     </table>
   </div>
