@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="dark">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zombie Outbreak: Last Human Standing — Infection Simulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:title" content="ZOMBIE OUTBREAK SIMULATION">
+<meta property="og:description" content="1,000 humans. One patient zero. Pick a number and bet on the last human standing.">
+<meta property="og:image" content="og-image.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ZOMBIE OUTBREAK SIMULATION">
+<meta name="twitter:description" content="1,000 humans. One patient zero. Pick a number and bet on the last human standing.">
+<meta name="twitter:image" content="og-image.png">
+<link rel="stylesheet" href="zombie_styles.css">
+</head>
+<body>
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;position:relative;">
+    <div id="simTitle" style="font-family:'Special Elite',monospace;font-size:16px;color:#c02020;letter-spacing:.1em;">ZOMBIE OUTBREAK SIMULATION</div>
+    <button id="muteBtn" title="Mute sound" style="position:absolute;left:50%;transform:translateX(-50%);background:var(--hatch-widget-surface);color:var(--hatch-widget-text);border:1px solid var(--hatch-widget-border);border-radius:8px;padding:6px 12px;font-size:14px;cursor:pointer;">&#128266;</button>
+    <div style="position:absolute;left:72%;transform:translateX(-50%);display:flex;gap:4px;align-items:center;">
+      <span style="font-size:12px;color:var(--hatch-widget-text);white-space:nowrap;">Sim speed</span>
+      <button class="spdBtn" data-spd="1" style="background:#1d7a3a;color:#fff;border:none;border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;">1x</button>
+      <button class="spdBtn" data-spd="2" style="background:var(--hatch-widget-surface);color:var(--hatch-widget-text);border:1px solid var(--hatch-widget-border);border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;">2x</button>
+      <button class="spdBtn" data-spd="4" style="background:var(--hatch-widget-surface);color:var(--hatch-widget-text);border:1px solid var(--hatch-widget-border);border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;">4x</button>
+    </div>
+
+    <div style="display:flex;gap:8px;align-items:center;">
+      <label for="dotsInput" style="font-size:12px;color:var(--hatch-widget-text);white-space:nowrap;">Humans:</label>
+      <input id="dotsInput" type="number" min="2" max="1000" value="1000" style="width:76px;background:var(--hatch-widget-surface);color:var(--hatch-widget-text);border:1px solid var(--hatch-widget-border);border-radius:8px;padding:6px 8px;font-size:12px;">
+      <button id="reset10" style="background:var(--hatch-widget-surface);color:var(--hatch-widget-text);border:1px solid var(--hatch-widget-border);border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;">Reset</button>
+    </div>
+  </div>
+
+  <div class="canvas-holder">
+    <canvas id="cv10" class="portal-canvas"></canvas>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:8px;margin-top:10px;">
+    <div style="flex:1;background:#8b0000;border:1px solid var(--hatch-widget-border);border-radius:6px;height:10px;overflow:hidden;">
+      <div id="meter10" style="height:100%;width:100%;background:linear-gradient(90deg,#1d7a3a,#39ff5a);transition:width .2s;"></div>
+    </div>
+    <div id="dotsLabel10" style="font-size:12px;color:var(--hatch-widget-text);white-space:nowrap;">healthy: 1000</div>
+  </div>
+
+  <div style="display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap;">
+    <label id="guessLabel" for="guessInput10" style="font-size:12px;color:var(--hatch-widget-text);white-space:nowrap;">Your pick (1&ndash;1000):</label>
+    <input id="guessInput10" type="number" min="1" max="1000" placeholder="e.g. 437" style="width:110px;background:var(--hatch-widget-surface);color:var(--hatch-widget-text);border:1px solid var(--hatch-widget-border);border-radius:8px;padding:6px 8px;font-size:12px;">
+    <button id="guessBtn10" style="background:#1d7a3a;color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;">Lock in guess &amp; start</button>
+    <div style="margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+      <div id="timer10" style="font-size:14px;color:var(--hatch-widget-text);font-weight:700;">0:00</div>
+      <div style="display:flex;align-items:center;gap:6px;cursor:pointer;" id="bloodToggleWrap">
+        <div id="bloodSwitch" style="width:28px;height:16px;border-radius:8px;background:#8b0000;position:relative;transition:background .2s;flex-shrink:0;">
+          <div id="bloodKnob" style="width:12px;height:12px;border-radius:50%;background:#fff;position:absolute;top:2px;left:14px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.4);"></div>
+        </div>
+        <span style="font-size:11px;color:var(--hatch-widget-text);">Blood</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="status10" style="font-size:12px;color:var(--hatch-widget-muted);margin-top:8px;min-height:18px;">Patient zero is out there. Lock in your guess before the outbreak begins.</div>
+  <div id="odds10" style="font-size:11px;color:var(--hatch-widget-muted);margin-top:4px;min-height:16px;"></div>
+
+  <div style="margin-top:12px;border:1px solid var(--hatch-widget-border);border-radius:8px;overflow:hidden;">
+    <table style="width:100%;border-collapse:collapse;font-size:13px;color:var(--hatch-widget-text);font-family:'Special Elite',monospace;">
+      <tr style="background:var(--hatch-widget-surface);">
+        <th style="padding:8px 12px;text-align:left;font-weight:700;">Humans alive</th>
+        <th style="padding:8px 12px;text-align:left;font-weight:700;">Zombies</th>
+        <th style="padding:8px 12px;text-align:left;font-weight:700;">% infected</th>
+        <th style="padding:8px 12px;text-align:left;font-weight:700;">Your pick odds</th>
+      </tr>
+      <tr>
+        <td id="statHumans" style="padding:8px 12px;">1000</td>
+        <td id="statZombies" style="padding:8px 12px;">0</td>
+        <td id="statPct" style="padding:8px 12px;">0%</td>
+        <td id="statOdds" style="padding:8px 12px;">&mdash;</td>
+      </tr>
+    </table>
+  </div>
+
+<script src="zombie_script.js"></script>
+</body>
+</html>
